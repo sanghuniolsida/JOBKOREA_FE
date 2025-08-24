@@ -6,11 +6,13 @@ import { Footer } from '../components/Footer';
 import { FilterSection, Chip, Accordion, PlusIcon, DayPickerPopup, CustomCheckbox } from '../components/FilterComponents';
 
 const SearchUI: React.FC = () => {
+    // Core Filters
     const [selectedPeriods, setSelectedPeriods] = useState<WorkPeriod[]>([]);
     const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<EmploymentType[]>([]);
     const [selectedGender, setSelectedGender] = useState<Gender>(GENDERS[0]); // '무관'
     const [age, setAge] = useState('');
 
+    // Work Day
     const [activeDayTab, setActiveDayTab] = useState<'list' | 'direct'>('list');
     const [selectedDays, setSelectedDays] = useState<WorkDay[]>([]);
     const [directlySelectedWeekdays, setDirectlySelectedWeekdays] = useState<DayOfWeek[]>([]);
@@ -18,6 +20,7 @@ const SearchUI: React.FC = () => {
     const [dayPickerAnchor, setDayPickerAnchor] = useState<HTMLElement | null>(null);
     const [activeWorkDayForPopup, setActiveWorkDayForPopup] = useState<WorkDay | null>(null);
 
+    // Work Hour
     const [activeHourTab, setActiveHourTab] = useState<'list' | 'direct'>('list');
     const [selectedWorkHours, setSelectedWorkHours] = useState<WorkHour[]>([]);
     const [excludeNegotiable, setExcludeNegotiable] = useState(false);
@@ -25,11 +28,13 @@ const SearchUI: React.FC = () => {
     const [directStartTime, setDirectStartTime] = useState('');
     const [directEndTime, setDirectEndTime] = useState('');
 
+    // Limits
     const maxPeriods = 6;
     const maxDays = 3;
     const maxWorkHours = 3;
     const maxEmploymentTypes = 3;
 
+    // Time options
     const timeOptions = useMemo(() => {
         const options: string[] = [];
         for (let h = 0; h < 24; h++) {
@@ -42,6 +47,7 @@ const SearchUI: React.FC = () => {
         return options;
     }, []);
 
+    // Generic toggle factory
     const createToggleHandler = <T,>(
         selectedItems: T[],
         setter: React.Dispatch<React.SetStateAction<T[]>>,
@@ -55,12 +61,9 @@ const SearchUI: React.FC = () => {
     };
 
     const handleTogglePeriod = createToggleHandler(selectedPeriods, setSelectedPeriods, maxPeriods);
-    const handleToggleEmployment = createToggleHandler(
-        selectedEmploymentTypes,
-        setSelectedEmploymentTypes,
-        maxEmploymentTypes
-    );
+    const handleToggleEmployment = createToggleHandler(selectedEmploymentTypes, setSelectedEmploymentTypes, maxEmploymentTypes);
 
+    // Day handlers
     const handleCloseDayPicker = () => {
         setDayPickerAnchor(null);
         setActiveWorkDayForPopup(null);
@@ -69,12 +72,12 @@ const SearchUI: React.FC = () => {
     const POPUP_TRIGGER_DAYS: WorkDay[] = ['주1일', '주2일', '주3일', '주4일', '주5일', '주6일'];
 
     const handleToggleDay = (day: WorkDay, event: React.MouseEvent<HTMLButtonElement>) => {
-        const isCurrentlySelected = selectedDays.includes(day);
-        const isPopupTrigger = POPUP_TRIGGER_DAYS.includes(day);
+        const isSelected = selectedDays.includes(day);
+        const trigger = POPUP_TRIGGER_DAYS.includes(day);
 
-        if (isCurrentlySelected) {
+        if (isSelected) {
             setSelectedDays((prev) => prev.filter((d) => d !== day));
-            if (isPopupTrigger) {
+            if (trigger) {
                 setPreferredDaysMap((prev) => {
                     const next = { ...prev };
                     delete next[day];
@@ -89,7 +92,7 @@ const SearchUI: React.FC = () => {
 
         setSelectedDays((prev) => [...prev, day]);
 
-        if (isPopupTrigger) {
+        if (trigger) {
             setDayPickerAnchor(event.currentTarget);
             setActiveWorkDayForPopup(day);
         } else {
@@ -100,19 +103,13 @@ const SearchUI: React.FC = () => {
     const handleTogglePreferredDay = (day: DayOfWeek) => {
         if (!activeWorkDayForPopup) return;
         setPreferredDaysMap((prevMap) => {
-            const currentPreferred = prevMap[activeWorkDayForPopup] || [];
-            const newPreferred = currentPreferred.includes(day)
-                ? currentPreferred.filter((d) => d !== day)
-                : [...currentPreferred, day];
-            return { ...prevMap, [activeWorkDayForPopup]: newPreferred };
+            const current = prevMap[activeWorkDayForPopup] || [];
+            const next = current.includes(day) ? current.filter((d) => d !== day) : [...current, day];
+            return { ...prevMap, [activeWorkDayForPopup]: next };
         });
     };
 
-    const handleToggleDirectWeekday = createToggleHandler(
-        directlySelectedWeekdays,
-        setDirectlySelectedWeekdays,
-        7
-    );
+    const handleToggleDirectWeekday = createToggleHandler(directlySelectedWeekdays, setDirectlySelectedWeekdays, 7);
 
     const handleDayTabSwitch = (tab: 'list' | 'direct') => {
         if (activeDayTab === tab) return;
@@ -123,7 +120,7 @@ const SearchUI: React.FC = () => {
         handleCloseDayPicker();
     };
 
-    // --- Work Hour Handlers ---
+    // Hour handlers
     const handleHourTabSwitch = (tab: 'list' | 'direct') => {
         if (activeHourTab === tab) return;
         setActiveHourTab(tab);
@@ -172,6 +169,32 @@ const SearchUI: React.FC = () => {
         setSelectedTimeRanges((prev) => prev.filter((_, i) => i !== index));
     };
 
+    // ✅ 초기화 핸들러: 헤더에서 호출
+    const handleReset = () => {
+        // Core
+        setSelectedPeriods([]);
+        setSelectedEmploymentTypes([]);
+        setSelectedGender(GENDERS[0]);
+        setAge('');
+
+        // Day
+        setActiveDayTab('list');
+        setSelectedDays([]);
+        setDirectlySelectedWeekdays([]);
+        setPreferredDaysMap({});
+        setDayPickerAnchor(null);
+        setActiveWorkDayForPopup(null);
+
+        // Hour
+        setActiveHourTab('list');
+        setSelectedWorkHours([]);
+        setExcludeNegotiable(false);
+        setSelectedTimeRanges([]);
+        setDirectStartTime('');
+        setDirectEndTime('');
+    };
+
+    // Render helpers
     const AddButton: React.FC = () => (
         <button className="flex w-full items-center justify-center rounded-lg border border-gray-300 py-3 text-gray-700 transition-colors hover:bg-gray-50">
             <PlusIcon />
@@ -186,7 +209,9 @@ const SearchUI: React.FC = () => {
 
     return (
         <div className="relative flex h-screen flex-col font-sans">
-            <Header />
+            {/* ⬇️ 초기화 핸들러 전달 */}
+            <Header onReset={handleReset} />
+
             <main className="flex-grow overflow-y-auto bg-gray-50 pt-16 pb-24">
                 {/* --- Core Filters --- */}
                 <div className="space-y-2">
@@ -223,8 +248,8 @@ const SearchUI: React.FC = () => {
                             <button
                                 onClick={() => handleDayTabSwitch('direct')}
                                 className={`flex-1 py-2 text-center text-sm font-medium transition-colors ${activeDayTab === 'direct'
-                                    ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
-                                    : 'text-gray-500 hover:text-gray-800'
+                                        ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
+                                        : 'text-gray-500 hover:text-gray-800'
                                     }`}
                             >
                                 직접 선택
@@ -285,8 +310,8 @@ const SearchUI: React.FC = () => {
                             <button
                                 onClick={() => handleHourTabSwitch('direct')}
                                 className={`flex-1 py-2 text-center text-sm font-medium transition-colors ${activeHourTab === 'direct'
-                                    ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
-                                    : 'text-gray-500 hover:text-gray-800'
+                                        ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
+                                        : 'text-gray-500 hover:text-gray-800'
                                     }`}
                             >
                                 직접 선택
@@ -313,9 +338,7 @@ const SearchUI: React.FC = () => {
                             <div className="space-y-4 pt-4">
                                 <div className="flex items-end gap-2">
                                     <div className="flex-1">
-                                        <label htmlFor="start-time" className="mb-1 block text-sm font-medium text-gray-700">
-                                            시작 시간
-                                        </label>
+                                        <label htmlFor="start-time" className="mb-1 block text-sm font-medium text-gray-700">시작 시간</label>
                                         <div className="relative">
                                             <select
                                                 id="start-time"
@@ -323,13 +346,9 @@ const SearchUI: React.FC = () => {
                                                 onChange={(e) => setDirectStartTime(e.target.value)}
                                                 className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-brand-orange focus:ring-brand-orange"
                                             >
-                                                <option value="" disabled>
-                                                    선택
-                                                </option>
+                                                <option value="" disabled>선택</option>
                                                 {timeOptions.map((time) => (
-                                                    <option key={`start-${time}`} value={time}>
-                                                        {time}
-                                                    </option>
+                                                    <option key={`start-${time}`} value={time}>{time}</option>
                                                 ))}
                                             </select>
                                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -340,9 +359,7 @@ const SearchUI: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="flex-1">
-                                        <label htmlFor="end-time" className="mb-1 block text-sm font-medium text-gray-700">
-                                            종료 시간
-                                        </label>
+                                        <label htmlFor="end-time" className="mb-1 block text-sm font-medium text-gray-700">종료 시간</label>
                                         <div className="relative">
                                             <select
                                                 id="end-time"
@@ -350,13 +367,9 @@ const SearchUI: React.FC = () => {
                                                 onChange={(e) => setDirectEndTime(e.target.value)}
                                                 className="w-full appearance-none rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-brand-orange focus:ring-brand-orange"
                                             >
-                                                <option value="" disabled>
-                                                    선택
-                                                </option>
+                                                <option value="" disabled>선택</option>
                                                 {timeOptions.map((time) => (
-                                                    <option key={`end-${time}`} value={time}>
-                                                        {time}
-                                                    </option>
+                                                    <option key={`end-${time}`} value={time}>{time}</option>
                                                 ))}
                                             </select>
                                             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -374,13 +387,12 @@ const SearchUI: React.FC = () => {
                                         추가
                                     </button>
                                 </div>
+
                                 <div className="space-y-2">
                                     {selectedTimeRanges.map((range, index) => (
                                         <div key={index} className="flex items-center justify-between rounded-lg bg-gray-100 p-3">
                                             <p className="text-sm font-semibold text-gray-800">
-                                                <span className="font-bold text-brand-orange">
-                                                    {range.start} ~ {range.end}
-                                                </span>
+                                                <span className="font-bold text-brand-orange">{range.start} ~ {range.end}</span>
                                             </p>
                                             <button onClick={() => handleRemoveTimeRange(index)} className="text-gray-400 hover:text-gray-600" aria-label="시간대 제거">
                                                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -395,6 +407,7 @@ const SearchUI: React.FC = () => {
                     </FilterSection>
                 </div>
 
+                {/* Additional Filters */}
                 <div className="mt-4">
                     <Accordion title="추가 조건 더보기">
                         <div className="space-y-2 pt-2">
@@ -449,6 +462,7 @@ const SearchUI: React.FC = () => {
                 </div>
             </main>
 
+            {/* Popup: anchor와 대상이 있을 때만 렌더 */}
             {activeWorkDayForPopup && dayPickerAnchor && (
                 <DayPickerPopup
                     anchorEl={dayPickerAnchor}

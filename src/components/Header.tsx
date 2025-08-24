@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const ArrowLeftIcon: React.FC = () => (
@@ -13,8 +12,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onReset }) => {
     return (
-        <header className="fixed top-0 left-1/2 transform -translate-x-1/2 w-[420px] h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-10">
-            <button className="p-2 text-gray-700">
+        <header className="fixed top-0 left-1/2 z-10 flex h-16 w-[420px] -translate-x-1/2 transform items-center justify-between border-b border-gray-200 bg-white px-4">
+            <button className="p-2 text-gray-700" aria-label="뒤로가기">
                 <ArrowLeftIcon />
             </button>
             <h1 className="text-lg font-bold text-gray-800">검색조건설정</h1>
