@@ -1,69 +1,79 @@
-# React + TypeScript + Vite
+# 알바몬 검색조건설정 모바일 페이지 분석 및 솔루션 도출 UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 소개
+모바일 웹 환경에서 **검색 조건 설정 UI**를 구현한 프로젝트입니다. 
 
-Currently, two official plugins are available:
+## 실행 방법
+```bash
+npm run dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+<br>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 👩‍💻구현한 주요 기능
+1. **근무 요일 선택 개선**  
+   - 주 2일, 주 3일 등 선택 시 → 사용자가 **선호하는 요일**을 추가로 선택할 수 있도록 구현  
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+2. **근무 시간대 다중 선택 기능**  
+   - 원하는 시간대를 **여러 개 등록**할 수 있도록 UI/상태 관리 로직 구현  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **스크롤 최적화 (아코디언 적용)**  
+   - 스크롤이 너무 길어지는 문제를 줄이기 위해  
+   - 성별, 연령 등 부가 조건은 **“추가 정보” 아코디언** 안에 배치 → 사용자 경험 개선
+
+
+<br>
+
+## 기술 스택
+**Frontend**: React.js, Vercel
+<br>
+
+## 프로젝트 구조 (Frontend)
+```
+src/
+├── components/     Header, Footer, FilterComponents
+├── pages/          
+│   ├── searchUI
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# 사용 예시 (Usage Example)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 1. 근무 요일 선택
+- **기능**: `주 2일`, `주 3일` 등을 선택할 경우, **선호하는 요일**을 추가로 선택할 수 있습니다.
+- **사용 방법**:
+  1. 근무 요일 필터에서 `주 2일`, `주 3일` 등 원하는 항목을 클릭합니다.
+  2. 팝업이 열리면, 선호하는 요일(예: 월, 수, 금)을 직접 선택할 수 있습니다.
+  3. 선택된 요일은 조건에 반영되어 하단 CTA(지원하기) 버튼으로 전달됩니다.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<div align="center">
+  <img src="docs/images/workdays1.png" alt="workdays1" width="45%" />
+  <img src="docs/images/workdays2.png" alt="workdays2" width="45%" />
+</div>
+
+---
+
+## 2. 근무 시간대 다중 선택
+- **기능**: 원하는 시간대를 **여러 개** 등록할 수 있습니다.
+- **사용 방법**:
+  1. 근무 시간 필터에서 `직접 선택` 탭으로 전환합니다.
+  2. 시작/종료 시간을 지정한 뒤 **추가하기 버튼**을 클릭합니다.
+  3. 여러 개의 시간대를 연속으로 등록할 수 있으며, 필요 시 삭제도 가능합니다.
+
+<img width="600" alt="workhours" src="docs/images/workhours.png" />
+
+---
+
+## 3. 추가 조건 (아코디언)
+- **기능**: 성별, 연령 등 부가 조건은 기본 화면에서 보이지 않고, **아코디언 영역**에 배치됩니다.
+- **사용 방법**:
+  1. `추가 조건 더보기` 버튼을 클릭합니다.
+  2. 성별, 연령 등 부가적인 조건을 선택하거나 입력할 수 있습니다.
+  3. 스크롤 부담을 줄이고, 필요한 경우에만 조건을 펼쳐서 볼 수 있습니다.
+
+<img width="600" alt="accordion" src="docs/images/accordion.png" />
+
+
+
