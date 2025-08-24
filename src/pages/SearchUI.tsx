@@ -6,13 +6,11 @@ import { Footer } from '../components/Footer';
 import { FilterSection, Chip, Accordion, PlusIcon, DayPickerPopup, CustomCheckbox } from '../components/FilterComponents';
 
 const SearchUI: React.FC = () => {
-    // Core Filters State
     const [selectedPeriods, setSelectedPeriods] = useState<WorkPeriod[]>([]);
     const [selectedEmploymentTypes, setSelectedEmploymentTypes] = useState<EmploymentType[]>([]);
     const [selectedGender, setSelectedGender] = useState<Gender>(GENDERS[0]); // '무관'
     const [age, setAge] = useState('');
 
-    // Work Day State
     const [activeDayTab, setActiveDayTab] = useState<'list' | 'direct'>('list');
     const [selectedDays, setSelectedDays] = useState<WorkDay[]>([]);
     const [directlySelectedWeekdays, setDirectlySelectedWeekdays] = useState<DayOfWeek[]>([]);
@@ -20,7 +18,6 @@ const SearchUI: React.FC = () => {
     const [dayPickerAnchor, setDayPickerAnchor] = useState<HTMLElement | null>(null);
     const [activeWorkDayForPopup, setActiveWorkDayForPopup] = useState<WorkDay | null>(null);
 
-    // Work Hours State
     const [activeHourTab, setActiveHourTab] = useState<'list' | 'direct'>('list');
     const [selectedWorkHours, setSelectedWorkHours] = useState<WorkHour[]>([]);
     const [excludeNegotiable, setExcludeNegotiable] = useState(false);
@@ -28,7 +25,6 @@ const SearchUI: React.FC = () => {
     const [directStartTime, setDirectStartTime] = useState('');
     const [directEndTime, setDirectEndTime] = useState('');
 
-    // Limits
     const maxPeriods = 6;
     const maxDays = 3;
     const maxWorkHours = 3;
@@ -46,7 +42,6 @@ const SearchUI: React.FC = () => {
         return options;
     }, []);
 
-    // --- Generic Handlers ---
     const createToggleHandler = <T,>(
         selectedItems: T[],
         setter: React.Dispatch<React.SetStateAction<T[]>>,
@@ -66,7 +61,6 @@ const SearchUI: React.FC = () => {
         maxEmploymentTypes
     );
 
-    // --- Work Day Handlers ---
     const handleCloseDayPicker = () => {
         setDayPickerAnchor(null);
         setActiveWorkDayForPopup(null);
@@ -178,7 +172,6 @@ const SearchUI: React.FC = () => {
         setSelectedTimeRanges((prev) => prev.filter((_, i) => i !== index));
     };
 
-    // --- Render Helpers ---
     const AddButton: React.FC = () => (
         <button className="flex w-full items-center justify-center rounded-lg border border-gray-300 py-3 text-gray-700 transition-colors hover:bg-gray-50">
             <PlusIcon />
@@ -402,7 +395,6 @@ const SearchUI: React.FC = () => {
                     </FilterSection>
                 </div>
 
-                {/* --- Additional Filters (Accordion) --- */}
                 <div className="mt-4">
                     <Accordion title="추가 조건 더보기">
                         <div className="space-y-2 pt-2">
@@ -457,7 +449,6 @@ const SearchUI: React.FC = () => {
                 </div>
             </main>
 
-            {/* Popup: anchor와 선택 대상이 있을 때만 렌더링 */}
             {activeWorkDayForPopup && dayPickerAnchor && (
                 <DayPickerPopup
                     anchorEl={dayPickerAnchor}
