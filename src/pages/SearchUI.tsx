@@ -28,6 +28,49 @@ const SearchUI: React.FC = () => {
     const [directStartTime, setDirectStartTime] = useState('');
     const [directEndTime, setDirectEndTime] = useState('');
 
+    // 파일 상단의 다른 useState들 아래에 추가
+    const [includeInput, setIncludeInput] = useState('');
+    const [excludeInput, setExcludeInput] = useState('');
+    const [includeKeywords, setIncludeKeywords] = useState<string[]>([]);
+    const [excludeKeywords, setExcludeKeywords] = useState<string[]>([]);
+
+    // 최대 개수 (스샷 기준: 포함 20, 제외 100)
+    const MAX_INCLUDE = 20;
+    const MAX_EXCLUDE = 100;
+
+    const addKeyword = (type: 'include' | 'exclude') => {
+        const raw = type === 'include' ? includeInput : excludeInput;
+        const token = raw.trim();
+        if (!token) return;
+
+        const list = type === 'include' ? includeKeywords : excludeKeywords;
+        const setList = type === 'include' ? setIncludeKeywords : setExcludeKeywords;
+        const setInput = type === 'include' ? setIncludeInput : setExcludeInput;
+        const limit = type === 'include' ? MAX_INCLUDE : MAX_EXCLUDE;
+
+        if (list.length >= limit) return;
+        if (list.includes(token)) {
+            setInput(''); // 중복이면 입력만 초기화
+            return;
+        }
+        setList([...list, token]);
+        setInput('');
+    };
+
+    const removeKeyword = (type: 'include' | 'exclude', idx: number) => {
+        const list = type === 'include' ? includeKeywords : excludeKeywords;
+        const setList = type === 'include' ? setIncludeKeywords : setExcludeKeywords;
+        setList(list.filter((_, i) => i !== idx));
+    };
+
+    const onKeyDownAdd = (type: 'include' | 'exclude') => (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addKeyword(type);
+        }
+    };
+
+
     // Limits
     const maxPeriods = 6;
     const maxDays = 3;
@@ -452,13 +495,90 @@ const SearchUI: React.FC = () => {
                                 </div>
                             </FilterSection>
 
-                            <FilterSection title="키워드" count={``}>
+                            <FilterSection title="키워드" count="">
+                                {/* 설명 */}
+                                <p className="mb-4 text-sm text-gray-500">
+                                    여러 개의 키워드를 포함하거나 제외할 수 있습니다.
+                                </p>
+
+                                {/* 포함 */}
+                                <div className="mb-1 flex items-center justify-between">
+                                    <h4 className="text-sm font-semibold text-gray-800">포함</h4>
+                                    <span className="text-xs text-gray-400">{includeKeywords.length}/{MAX_INCLUDE}</span>
+                                </div>
                                 <input
                                     type="text"
-                                    placeholder="키워드를 입력하세요 (예: 카페, 단기)"
-                                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-brand-orange focus:ring-brand-orange"
+                                    value={includeInput}
+                                    onChange={(e) => setIncludeInput(e.target.value)}
+                                    onKeyDown={onKeyDownAdd('include')}
+                                    placeholder="입력 단어 포함 공고만 검색합니다."
+                                    className="mb-2 w-full rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:border-brand-orange focus:ring-brand-orange"
                                 />
+                                {/* 포함 태그 */}
+                                {includeKeywords.length > 0 && (
+                                    <div className="mb-4 flex flex-wrap gap-2">
+                                        {includeKeywords.map((kw, i) => (
+                                            <span
+                                                key={`in-${kw}-${i}`}
+                                                className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                                            >
+                                                {kw}
+                                                <button
+                                                    onClick={() => removeKeyword('include', i)}
+                                                    aria-label="포함 키워드 제거"
+                                                    className="ml-1 text-gray-400 hover:text-gray-600"
+                                                >
+                                                    ×
+                                                </button>
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* 제외 */}
+                                <div className="mb-1 mt-4 flex items-center justify-between">
+                                    <h4 className="text-sm font-semibold text-gray-800">제외</h4>
+                                    <span className="text-xs text-gray-400">{excludeKeywords.length}/{MAX_EXCLUDE}</span>
+                                </div>
+                                <div className="mb-2 flex items-center gap-2">
+                                    <input
+                                        type="text"
+                                        value={excludeInput}
+                                        onChange={(e) => setExcludeInput(e.target.value)}
+                                        onKeyDown={onKeyDownAdd('exclude')}
+                                        placeholder="추가 단어 포함 공고를 제외합니다."
+                                        className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:border-brand-orange focus:ring-brand-orange"
+                                    />
+                                    <button
+                                        onClick={() => addKeyword('exclude')}
+                                        className="h-10 rounded-lg bg-black px-4 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40"
+                                        disabled={!excludeInput.trim() || excludeKeywords.length >= MAX_EXCLUDE}
+                                    >
+                                        추가
+                                    </button>
+                                </div>
+                                {/* 제외 태그 */}
+                                {excludeKeywords.length > 0 && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {excludeKeywords.map((kw, i) => (
+                                            <span
+                                                key={`ex-${kw}-${i}`}
+                                                className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700"
+                                            >
+                                                {kw}
+                                                <button
+                                                    onClick={() => removeKeyword('exclude', i)}
+                                                    aria-label="제외 키워드 제거"
+                                                    className="ml-1 text-gray-400 hover:text-gray-600"
+                                                >
+                                                    ×
+                                                </button>
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </FilterSection>
+
 
                             <div className="p-4">
                                 <button className="w-full rounded-lg border border-gray-300 py-3 text-gray-700 transition-colors hover:bg-gray-50">
