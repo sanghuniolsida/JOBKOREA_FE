@@ -47,7 +47,7 @@ project-root/
   vite.config.ts
 
 
-👩‍💻 내가 구현한 주요 기능 (Usage Example)
+##👩‍💻 내가 구현한 주요 기능 (Usage Example)
 1. 근무 요일 선택
 
 기능: 주 2일, 주 3일 등을 선택할 경우, 선호하는 요일을 추가로 선택할 수 있습니다.
@@ -93,7 +93,7 @@ project-root/
 
 <img width="251" height="563" alt="Image" src="https://github.com/user-attachments/assets/b9d6bd52-ba41-4e89-be18-016cd8f10d16" />
 
-📌 커밋 규칙
+##📌 커밋 규칙
 
 Conventional Commits 규칙을 따릅니다.
 
