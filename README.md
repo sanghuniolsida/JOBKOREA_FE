@@ -87,7 +87,7 @@ project-root/
 
 스크롤 부담을 줄이고, 필요한 경우에만 조건을 펼쳐서 볼 수 있습니다.
 
-<img src="docs/images/accordion.png" alt="accordion" width="600" />
+<img width="251" height="563" alt="Image" src="https://github.com/user-attachments/assets/b9d6bd52-ba41-4e89-be18-016cd8f10d16" />
 
 📌 커밋 규칙
 
