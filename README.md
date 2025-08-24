@@ -12,7 +12,7 @@
 
 [CHAT GPT 프롬프팅 링크]https://chatgpt.com/share/68aac989-a168-8010-9064-4782bb8cf2f8
 <br>
-[커서AI 프롬프팅](docs/ui-guidelines.md)
+[커서AI 프롬프팅](docs/cursor_ui.md)
 
 
 <div align="center">
