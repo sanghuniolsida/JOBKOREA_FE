@@ -1,0 +1,69 @@
+# 알바몬 검색조건설정 모바일 페이지 – AI 코드 작성 규칙
+
+## 0. 목적
+- 모바일 웹(375px 기준)에서 ‘검색 조건 설정’ UI 구현  
+- 하단 고정 CTA **“지원하기”**: 현재 필터 상태를 **지정 JSON 스키마**로 직렬화하여 제출  
+- 실시간 추천 연계를 위해 **URL 쿼리 동기화** 고려 (가능 시)  
+
+---
+
+## 1. Git & 커밋 규칙
+- Conventional Commits 형식 사용:  
+  - `feat`: 새로운 기능  
+  - `fix`: 버그 수정  
+  - `refactor`: 리팩토링  
+  - `style`: 스타일/디자인 변경 (로직 없음)  
+  - `docs`: 문서 수정  
+  - `chore`: 빌드/환경설정  
+  - `test`: 테스트 코드  
+
+---
+
+## 2. 기술 스택 & 기본 원칙
+- **React 18 + TypeScript + Vite + TailwindCSS**  
+- 함수형 컴포넌트, 훅 기반  
+- 상태 관리:  
+  - 페이지 로컬은 `useState`  
+  - 공용 필터 상태는 `URLSearchParams`와 동기화  
+- 테스트: **Vitest + @testing-library/react**  
+- 접근성(A11y):  
+  - `label-for` / `aria-*` 속성 엄수  
+  - 포커스 이동 가능  
+  - 키보드 조작 가능  
+
+---
+
+## 3. 폴더 구조
+```plaintext
+src/
+components/ # 원자적 (Atoms / Molecules / Organisms)
+pages/ # 페이지 단위 UI
+lib/ # 직렬화, 유틸, 포맷터
+types/ # 전역 타입 정의
+tests/ # 유닛/통합 테스트
+```
+
+---
+
+## 4. 네이밍 규칙
+- **컴포넌트**: `PascalCase`  
+- **props / state**: `camelCase`  
+- **타입**: `PascalCase`  
+- **상수**: `UPPER_SNAKE_CASE`  
+
+---
+
+## 5. 타입 & 상태 관리
+- 반드시 `types.ts`에 타입 정의 후 구현 시작  
+- 예시:
+```ts
+export type FilterState = {
+  region?: { city: string; district?: string };
+  category?: string;
+  weekdays?: string[];                        // ["Mon","Tue",...]
+  timeRange?: { start: string; end: string }; // "09:00" ~ "18:00"
+  wage?: { type: "hourly" | "daily"; min?: number; max?: number };
+  keywords?: string[];
+  options?: { weekend?: boolean; night?: boolean; shortTerm?: boolean };
+};
+``` 
