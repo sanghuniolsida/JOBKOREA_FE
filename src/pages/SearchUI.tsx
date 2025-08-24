@@ -327,18 +327,31 @@ const SearchUI: React.FC = () => {
 
                         {activeDayTab === 'direct' && (
                             <div className="pt-4">
-                                <div className="flex flex-wrap gap-2">
-                                    {DAYS_OF_WEEK.map((day) => (
-                                        <Chip
-                                            key={day}
-                                            label={day}
-                                            isActive={directlySelectedWeekdays.includes(day)}
-                                            onClick={() => createToggleHandler(directlySelectedWeekdays, setDirectlySelectedWeekdays, 7)(day)}
-                                        />
-                                    ))}
+                                {/* 7등분 고정 그리드 */}
+                                <div className="grid grid-cols-7 gap-2">
+                                    {DAYS_OF_WEEK.map((day) => {
+                                        const active = directlySelectedWeekdays.includes(day);
+                                        return (
+                                            <button
+                                                key={day}
+                                                onClick={() =>
+                                                    createToggleHandler(directlySelectedWeekdays, setDirectlySelectedWeekdays, 7)(day)
+                                                }
+                                                className={`h-9 w-full rounded-full border text-sm font-medium transition-colors
+                                                        ${active
+                                                        ? 'border-brand-orange bg-brand-orange text-white'
+                                                        : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100'
+                                                    }`}
+                                                aria-pressed={active}
+                                            >
+                                                {day}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         )}
+
                     </FilterSection>
 
                     <FilterSection title="근무시간" count={`${workHoursCount}/${maxWorkHours}`}>
