@@ -6,7 +6,18 @@
   <img src="https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
   <img src="https://img.shields.io/badge/TailwindCSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
 </div>
+---
 
+## CHAT GPT 프롬프팅 링크 및 GEN AI 프롬프팅 캡처 사진
+
+[CHAT GPT 프롬프팅 링크]https://chatgpt.com/share/68aac989-a168-8010-9064-4782bb8cf2f8
+
+<div align="center">
+  <img width="402" height="510" alt="Image" src="https://github.com/user-attachments/assets/34ba7f65-464a-4d72-bee5-6ca63f8963e9" />
+  <img width="401" height="587" alt="Image" src="https://github.com/user-attachments/assets/6d573f02-7936-4823-b0b7-04fc6c28cf3a" />
+  <img width="383" height="413" alt="Image" src="https://github.com/user-attachments/assets/241c884e-e140-4252-900f-c74fde6b5617" />
+</div>
+---
 ## 📋 프로젝트 개요
 
 모바일 웹 환경에서 **검색 조건 설정 UI**를 분석하고, 사용자 친화적 인터페이스로 리디자인 및 구현한 프로젝트입니다.
@@ -57,8 +68,8 @@ project-root/
 - **유연한 조합**: 여러 요일 조합 선택 지원
 
 <div align="center">
-  <img src="docs/images/workdays1.png" alt="근무요일 선택 1단계" width="45%" />
-  <img src="docs/images/workdays2.png" alt="근무요일 선택 2단계" width="45%" />
+  <img width="250" height="564" alt="Image" src="https://github.com/user-attachments/assets/ab912c63-0630-4990-9432-d02575da1d62" />
+  <img width="250" height="566" alt="Image" src="https://github.com/user-attachments/assets/d8af12b1-7997-4df5-8d10-3057d6ce6d83" />
 </div>
 
 ### 2. ⏰ 근무 시간대 다중 선택
