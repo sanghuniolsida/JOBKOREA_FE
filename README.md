@@ -85,7 +85,7 @@ project-root/
 
 여러 개의 시간대를 연속으로 등록할 수 있으며, 필요 시 삭제도 가능합니다.
 
-<img width="250" height="562" alt="Image" src="https://github.com/user-attachments/assets/f8c01e66-cf11-4c7a-adb1-465d66ee4de0" />
+![initial](https://github.com/user-attachments/assets/f8c01e66-cf11-4c7a-adb1-465d66ee4de0.PNG)
 
 3. 추가 조건 (아코디언)
 
