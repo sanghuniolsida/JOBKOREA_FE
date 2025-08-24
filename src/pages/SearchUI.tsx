@@ -614,7 +614,7 @@ const SearchUI: React.FC = () => {
                 />
             )}
 
-            <Footer resultCount={234615} />
+            <Footer resultCount={0} />
         </div>
     );
 };
