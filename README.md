@@ -20,19 +20,6 @@
 
 ---
 
-## 🚀 빠른 시작
-
-### 설치 및 실행
-```bash
-# 의존성 설치
-npm install
-
-# 개발 서버 실행
-npm run dev
-
-
----
-
 ## 🛠️ 기술 스택
 
 | 분야 | 기술 | 버전 | 용도 |
@@ -42,10 +29,9 @@ npm run dev
 | **빌드툴** | Vite | 5+ | 개발 환경 |
 | **스타일링** | TailwindCSS | 3+ | 유틸리티 CSS |
 
----
+<br>
 
 ## 📂 프로젝트 구조
-
 ```
 project-root/
 ├── src/                    # 소스 코드
@@ -62,8 +48,6 @@ project-root/
 ├── public/               # 정적 파일
 └── package.json
 ```
-
----
 
 ## ✨ 주요 기능
 
@@ -113,18 +97,6 @@ project-root/
 
 ---
 
-## 📌 커밋 컨벤션
-
-이 프로젝트는 [Conventional Commits](https://www.conventionalcommits.org/) 규칙을 따릅니다.
-
-```
-<type>[optional scope]: <description>
-
-[optional body]
-
-[optional footer(s)]
-```
-
 ### 타입별 예시
 - `feat`: 새로운 기능 추가
 - `fix`: 버그 수정
@@ -141,18 +113,3 @@ project-root/
 - **원본 알바몬 앱**: [알바몬 모바일 웹](https://www.albamon.com)
 - **디자인 시스템**: [Tailwind CSS 문서](https://tailwindcss.com/docs)
 
----
-
-## 🤝 기여하기
-
-1. 이 저장소를 Fork 합니다
-2. feature 브랜치를 생성합니다 (`git checkout -b feature/새기능`)
-3. 변경사항을 커밋합니다 (`git commit -m 'feat: 새기능 추가'`)
-4. 브랜치에 Push 합니다 (`git push origin feature/새기능`)
-5. Pull Request를 생성합니다
-
----
-
-<div align="center">
-  <sub>Built with ❤️ for better user experience</sub>
-</div>
