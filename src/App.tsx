@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SearchUI from './pages/searchUI';
 
-function App() {
+export default function App() {
   return (
-    <>
-      <h1>Vite + React</h1>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SearchUI />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App
