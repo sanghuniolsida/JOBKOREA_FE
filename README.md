@@ -66,7 +66,7 @@ project-root/
 - **직관적 입력**: 시작/종료 시간을 쉽게 지정
 
 <div align="center">
-  <img src="docs/images/workhours.png" alt="근무시간 설정" width="600" />
+<img width="250" height="562" alt="Image" src="https://github.com/user-attachments/assets/b3f6d94c-8ffa-4dec-aaa2-5e6ddda08008" />
 </div>
 
 ### 3. 📋 추가 조건 (아코디언)
@@ -75,7 +75,7 @@ project-root/
 - **깔끔한 UI**: 기본 화면의 복잡도를 최소화
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/b9d6bd52-ba41-4e89-be18-016cd8f10d16" alt="아코디언 추가 조건" width="300" />
+<img width="250" height="562" alt="Image" src="https://github.com/user-attachments/assets/d4c4678f-9d3d-4cf8-b64f-5a1e50d166b5" />
 </div>
 
 ---
