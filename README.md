@@ -69,8 +69,8 @@ project-root/
 선택된 요일은 조건에 반영되어 하단 CTA(지원하기) 버튼으로 전달됩니다.
 
 <div align="center">
-  <img width="250" height="564" alt="Image" src="https://github.com/user-attachments/assets/ab1381f3-0a61-4029-8c2f-2a2be08bf0c3" />
-  <img width="250" height="566" alt="Image" src="https://github.com/user-attachments/assets/4456d765-78ef-4631-8b2d-7a270bb19638" />
+  <img src="./docs/images/workdays1.png" alt="workdays1" width="45%" />
+  <img src="./docs/images/workdays2.png" alt="workdays2" width="45%" />
 </div>
 
 2. 근무 시간대 다중 선택
@@ -99,7 +99,7 @@ project-root/
 
 스크롤 부담을 줄이고, 필요한 경우에만 조건을 펼쳐서 볼 수 있습니다.
 
-<img width="251" height="563" alt="Image" src="https://github.com/user-attachments/assets/b9d6bd52-ba41-4e89-be18-016cd8f10d16" />
+<img src="./docs/images/accordion.png" alt="accordion" width="600" />
 
 📌 커밋 규칙
 
