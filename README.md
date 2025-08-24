@@ -1,6 +1,6 @@
 📄 최종 README.md
 # 알바몬 검색조건설정 모바일UI 분석 및 솔루션 도출 페이지
-
+---
 # CHAT GPT 프롬프팅 링크 & GEN AI 프롬프팅 캡처 사진
 https://chatgpt.com/share/68aac989-a168-8010-9064-4782bb8cf2f8
 
@@ -46,8 +46,8 @@ project-root/
   package.json
   vite.config.ts
 
-
-##👩‍💻 내가 구현한 주요 기능 (Usage Example)
+---
+## 👩‍💻 내가 구현한 주요 기능 (Usage Example)
 1. 근무 요일 선택
 
 기능: 주 2일, 주 3일 등을 선택할 경우, 선호하는 요일을 추가로 선택할 수 있습니다.
@@ -93,6 +93,7 @@ project-root/
 
 <img width="251" height="563" alt="Image" src="https://github.com/user-attachments/assets/b9d6bd52-ba41-4e89-be18-016cd8f10d16" />
 
+---
 ##📌 커밋 규칙
 
 Conventional Commits 규칙을 따릅니다.
