@@ -248,8 +248,8 @@ const SearchUI: React.FC = () => {
                             <button
                                 onClick={() => handleDayTabSwitch('direct')}
                                 className={`flex-1 py-2 text-center text-sm font-medium transition-colors ${activeDayTab === 'direct'
-                                        ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
-                                        : 'text-gray-500 hover:text-gray-800'
+                                    ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
+                                    : 'text-gray-500 hover:text-gray-800'
                                     }`}
                             >
                                 직접 선택
@@ -310,8 +310,8 @@ const SearchUI: React.FC = () => {
                             <button
                                 onClick={() => handleHourTabSwitch('direct')}
                                 className={`flex-1 py-2 text-center text-sm font-medium transition-colors ${activeHourTab === 'direct'
-                                        ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
-                                        : 'text-gray-500 hover:text-gray-800'
+                                    ? 'border-b-2 border-brand-orange text-brand-orange font-bold'
+                                    : 'text-gray-500 hover:text-gray-800'
                                     }`}
                             >
                                 직접 선택
@@ -412,16 +412,24 @@ const SearchUI: React.FC = () => {
                     <Accordion title="추가 조건 더보기">
                         <div className="space-y-2 pt-2">
                             <FilterSection title="인적 조건" count={``}>
-                                <div className="flex items-start gap-8">
-                                    <div className="flex-1">
+                                <div className="flex items-start gap-4">
+                                    {/* 성별 */}
+                                    <div className="flex-[2]">
                                         <h3 className="mb-2 font-semibold text-gray-700">성별</h3>
                                         <div className="flex flex-wrap gap-2">
                                             {GENDERS.map((gender) => (
-                                                <Chip key={gender} label={gender} isActive={selectedGender === gender} onClick={() => setSelectedGender(gender)} />
+                                                <Chip
+                                                    key={gender}
+                                                    label={gender}
+                                                    isActive={selectedGender === gender}
+                                                    onClick={() => setSelectedGender(gender)}
+                                                />
                                             ))}
                                         </div>
                                     </div>
-                                    <div className="flex-1">
+
+                                    {/* 연령 */}
+                                    <div className="w-28"> {/* 또는 flex-[1] */}
                                         <h3 className="mb-2 font-semibold text-gray-700">연령(만 나이)</h3>
                                         <input
                                             type="text"
@@ -429,11 +437,12 @@ const SearchUI: React.FC = () => {
                                             placeholder="ex) 20"
                                             value={age}
                                             onChange={(e) => setAge(e.target.value)}
-                                            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:border-brand-orange focus:ring-brand-orange"
+                                            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm placeholder-gray-400 focus:border-brand-orange focus:ring-brand-orange"
                                         />
                                     </div>
                                 </div>
                             </FilterSection>
+
 
                             <FilterSection title="고용형태" count={`${selectedEmploymentTypes.length}/${maxEmploymentTypes}`}>
                                 <div className="flex flex-wrap gap-2">
